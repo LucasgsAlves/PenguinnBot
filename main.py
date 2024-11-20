@@ -1,21 +1,24 @@
 import discord
 from discord.ext import commands
-from config import intents, token 
+from config.config import intents, token 
+from commands import kick
 
-# COMANDO BASE DO BOT
+
+# Tipo de push de comando
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# EVENTOS DO PENGUINN BOT
+# Eventos do Pinguinn Bot
 @bot.event
-# VERIFICANDO SE O BOT ESTÁ ONLINE
+# Verficando se o bot está online
 async def on_ready():
     print("Penguinn está pronto ✅")
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game('HOCKEY 🏒 '))
     await bot.tree.sync()
     
+    # Id da mensagem
     embed_message_id = 1308861576425766964
 
-    # ID DO CHAT DE REGRAS DO SERVIDOR
+    # Id do chat de regras
     rules_chat_id = 1308189320074498148
     channel = bot.get_channel(rules_chat_id)
 
@@ -33,6 +36,7 @@ async def on_ready():
         except discord.NotFound:
             print("Mensagem antiga não encontrada. Um novo embed será enviado.")
 
+    #Regras do Servidor
     embed_rules = discord.Embed(
         title="📜 Regras da Comunidade",
         description="Leia as regras para manter um ambiente saudável e divertido no servidor.",
@@ -68,6 +72,7 @@ async def on_ready():
 # Boas-Vindas ao Servidor
 @bot.event
 async def on_member_join(member: discord.Member):
+    # Definindo Id dos canais
     channel = bot.get_channel(1307529809911480320)
     channel_rules_id = 1308189320074498148
     channel_question_id = 1308193696486789122
@@ -77,6 +82,7 @@ async def on_member_join(member: discord.Member):
 
     name_tag = f"{member.name}"
 
+    # Configurando o Embed
     embed_welcome = discord.Embed(
         title=f'Bem-vindo(a) | {name_tag}!',
         description="Explore, o iglu do Iced Club. 🐧\n\n"
@@ -89,6 +95,9 @@ async def on_member_join(member: discord.Member):
 
     await channel.send(embed=embed_welcome)
 
+
+#Commandos do servidor
+bot.add_command(kick)
 
 # Bot Token
 bot.run(token)
