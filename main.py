@@ -1,18 +1,13 @@
 import discord
 from discord.ext import commands
-from discord import app_commands
+from config import intents, token 
 
-intents = discord.Intents.default()
-intents.message_content = True
-intents.members = True
-intents.reactions = True
+# COMANDO BASE DO BOT
 bot = commands.Bot(command_prefix="!", intents=intents)
-
-
-
 
 # EVENTOS DO PENGUINN BOT
 @bot.event
+# VERIFICANDO SE O BOT ESTÁ ONLINE
 async def on_ready():
     print("Penguinn está pronto ✅")
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game('HOCKEY 🏒 '))
@@ -70,7 +65,7 @@ async def on_ready():
     embed_rules.set_footer(text="Respeite as regras e divirta-se no servidor! 😊")
 
 
-# BOAS-VINDAS AO SERVIDOR
+# Boas-Vindas ao Servidor
 @bot.event
 async def on_member_join(member: discord.Member):
     channel = bot.get_channel(1307529809911480320)
@@ -95,5 +90,5 @@ async def on_member_join(member: discord.Member):
     await channel.send(embed=embed_welcome)
 
 
-# BOT TOKEN
-bot.run("MTMwNjk5MzU3OTAwODQ1ODgyMg.GPZsTf.h9dJVS-unZ5kQHDmOfp0jfzWH00dvq1CR8DF7o")
+# Bot Token
+bot.run(token)
