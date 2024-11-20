@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 from config.config import intents, token 
-from commands import kick
+from commands.commandsModerator import kick, ban, unban
+
 
 
 # Tipo de push de comando
@@ -22,6 +23,7 @@ async def on_ready():
     rules_chat_id = 1308189320074498148
     channel = bot.get_channel(rules_chat_id)
 
+    # Bsucando canal de regras
     if not channel:
         print("Canal de regras não encontrado!")
         return
@@ -65,9 +67,7 @@ async def on_ready():
         value="É proibido conteúdo relacionado a pornografia ou imagens com teor erótico. Isso resultará em remoção do servidor.",
         inline=False,
     )
-
     embed_rules.set_footer(text="Respeite as regras e divirta-se no servidor! 😊")
-
 
 # Boas-Vindas ao Servidor
 @bot.event
@@ -96,8 +96,16 @@ async def on_member_join(member: discord.Member):
     await channel.send(embed=embed_welcome)
 
 
+
 #Commandos do servidor
+
+# Comando de kick, ban e unban
 bot.add_command(kick)
+bot.add_command(ban)
+bot.add_command(unban)
+
+
+
 
 # Bot Token
 bot.run(token)
